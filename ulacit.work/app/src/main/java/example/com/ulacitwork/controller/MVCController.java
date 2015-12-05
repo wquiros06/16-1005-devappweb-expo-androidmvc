@@ -32,9 +32,8 @@ public class MVCController {
 
         StudentService studentService = new StudentService(context);
 
-        //studentService.invokeWS();
         try {
-            tasks = studentService.execute().get();
+            LoadTasks(studentService.execute().get());
         } catch (ExecutionException ee) {
             ee.printStackTrace();
             Log.d("==>>Error: ", ee.toString());
@@ -43,18 +42,12 @@ public class MVCController {
             Log.d("==>>Error: ", ie.toString());
         }
 
-
-        // tasks.clear();
-//        if (c != null) {
-//            c.moveToFirst();
-//            while (c.isAfterLast() == false) {
-//                tasks.add(c.getString(0));
-//                c.moveToNext();
-//            }
-//            c.close();
-//        }
         return tasks;
     }
 
-
+    private void LoadTasks(ArrayList<MVCModel> students) {
+        for (MVCModel student : students) {
+            this.tasks.add(student.getName() + "-" + student.getCourse());
+        }
+    }
 }

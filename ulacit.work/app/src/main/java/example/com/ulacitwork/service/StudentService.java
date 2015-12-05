@@ -14,11 +14,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import example.com.ulacitwork.model.MVCModel;
+
 /**
  * Created by Administrator on 12/4/2015.
  */
-public class StudentService extends AsyncTask<Void, Void, ArrayList<String>> {
-
+public class StudentService extends AsyncTask<Void, Void, ArrayList<MVCModel>> {
     Context context;
 
     public StudentService(Context context) {
@@ -27,9 +28,8 @@ public class StudentService extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private final String sURL = "https://api.mongolab.com/api/1/databases/avantica-test/collections/students?apiKey=12KfjNX97_amx0iUdS2I_eitAy3jSaOb";
 
-
-    protected ArrayList<String> doInBackground(Void... params) {
-        ArrayList<String> students = new ArrayList<String>();
+    protected ArrayList<MVCModel> doInBackground(Void... params) {
+        ArrayList<MVCModel> students = new ArrayList<MVCModel>();
         try {
             HttpClient cliente = new DefaultHttpClient();
             HttpGet request = new HttpGet(sURL);
@@ -37,32 +37,25 @@ public class StudentService extends AsyncTask<Void, Void, ArrayList<String>> {
 
             try {
                 String respStr = EntityUtils.toString(response.getEntity());
-
                 JSONArray respJSON = new JSONArray(respStr);
-
-
 
                 for (int i = 0; i < respJSON.length(); i++) {
                     JSONObject obj = respJSON.getJSONObject(i);
-
+                    MVCModel student = new MVCModel();
                     String name = obj.getString("name");
                     String course = obj.getString("course");
-                    String student = name + " - " + course;
+                    student.setName(name);
+                    student.setCourse(course);
+
                     students.add(student);
-
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return students;
-
     }
-
 }

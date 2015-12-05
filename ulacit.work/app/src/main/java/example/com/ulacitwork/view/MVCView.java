@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import example.com.ulacitwork.controller.MVCController;
 
 public class MVCView extends Activity {
     public static final String APP_TAG = "example.com.ulacit";
-    public ListView lvTask;
+    private ListView lvTask;
     private Button btNewTask;
     private MVCController controller;
     ProgressDialog prgDialog;
